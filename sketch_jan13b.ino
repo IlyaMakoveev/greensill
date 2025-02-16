@@ -25,32 +25,34 @@ void loop() {
    float t = dht.readTemperature();
    int p = analogRead(A0);
    int l = analogRead(A2);
-   bool button  = digitalRead(4);
-   bool buttonp = 0;
-   
-   int dl = map(l, 315, 700, 0, 255);
-    int b = map(p, 0, 1023, 0, 255);
+   bool button = digitalRead(4);
+   static bool buttonp = 0;
 
-    if (button == 1){
+   int dl = map(l, 315, 700, 0, 255);
+   int b = map(p, 0, 1023, 0, 255);
+
+   if (button == HIGH && !buttonp) {
       buttonp = !buttonp;
-      if (buttonp == 0){
-        analogWrite(3, b);
-        Serial.println ("A");
-      }
-      if (buttonp == 1){
-        analogWrite(3, dl);
-         Serial.println ("B");
-      }
-  }
-   LCD.setCursor(0,0);
+      delay(50); 
+   }
+
+   if (buttonp) {
+      analogWrite(3, b);
+      Serial.println("B");
+   } else {
+      analogWrite(3, dl);
+      Serial.println("A");
+   }
+
+   LCD.setCursor(0, 0);
    LCD.print("Humidity: ");
    LCD.print(h);
 
-   LCD.setCursor(0,1);
+   LCD.setCursor(0, 1);
    LCD.print("Temp: ");
    LCD.print(t);
 
-int      sol = analogRead(A1);
+   int sol = analogRead(A1);
    Serial.print("sol = ");
    Serial.println(sol);
 
