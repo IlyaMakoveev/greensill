@@ -17,6 +17,7 @@ void setup() {
    Serial.begin(9600);
    pinMode(3, OUTPUT);
    pinMode(4, INPUT_PULLUP);
+   pinMode(5, OUTPUT);
 
   int buttonState = 0;
   int lastButtonState = 0;
@@ -28,6 +29,7 @@ void loop() {
    int temp = dht.readTemperature();
    int potenciom = analogRead(A0);
    int light = analogRead(A2); 
+ 
    int dl = map(light, 315, 700, 0, 255);
    int b = map(potenciom, 0, 1023, 0, 255);
 
@@ -60,4 +62,9 @@ void loop() {
   LCD.print("Temp: ");
   LCD.print(temp);
 
+  digitalWrite(5, HIGH);
+  delay(500); // РАБОАТЕТ
+
 }
+
+
